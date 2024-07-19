@@ -1,0 +1,41 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+
+  &.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  &.btn-md {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+
+  &.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+  }
+
+  i.icon {
+    margin-right: 0.5rem;
+
+    &.no-text {
+      margin-right: 0;
+    }
+  }
+
+  &:hover {
+    background-color: #ddd;
+  }
+  &:active {
+    transform: scale(0.99);
+  }
+}
