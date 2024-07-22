@@ -2,10 +2,13 @@ import { Component } from "@angular/core";
 import { RouterOutlet } from '@angular/router';
 
 // component
-import {HeaderComponent, SidebarComponent, ButtonComponent} from "./components";
+import {CurrencyWidgetComponent, HeaderComponent, SidebarComponent, ButtonComponent} from "./components";
 
 const COMPONENTS = [
-  HeaderComponent, SidebarComponent, ButtonComponent
+  CurrencyWidgetComponent,
+  HeaderComponent,
+  SidebarComponent,
+  ButtonComponent
 ];
 
 @Component({
@@ -16,7 +19,7 @@ const COMPONENTS = [
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'ng-excange-rate';
+  title = 'ng-exchange-rate';
   sideBarOpened: boolean = false;
 
   setSideBarOpened(value: boolean): void {
