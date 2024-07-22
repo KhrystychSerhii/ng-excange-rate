@@ -15,5 +15,5 @@
       <ng-content select="[suffix-icon]"></ng-content>
     </span>
   </div>
-  <span class="input-field__error" id="error">{{error}}</span>
+  <span *ngIf="!!error" class="input-field__error" id="error">{{error}}</span>
 </div>

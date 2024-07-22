@@ -1,5 +1,5 @@
 import {
-  AfterContentInit, AfterViewInit,
+  AfterContentInit, AfterViewInit, ChangeDetectorRef,
   Component,
   ContentChild,
   ContentChildren,
@@ -8,15 +8,18 @@ import {
   HostBinding,
   Input, QueryList, ViewChild
 } from "@angular/core";
+import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 
 import {get} from "../../libs/helpers";
 
+
 @Component({
   selector: 'app-input-field',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule
   ],
   providers: [
@@ -29,7 +32,7 @@ import {get} from "../../libs/helpers";
   templateUrl: './input-field.component.html',
   styleUrl: './input-field.component.scss'
 })
-export class InputFieldComponent implements ControlValueAccessor, AfterViewInit {
+export class InputFieldComponent implements ControlValueAccessor {
   @Input('id') id: string = '';
   @Input('label') label: string = '';
   @Input('error') error: string = '';
@@ -37,30 +40,26 @@ export class InputFieldComponent implements ControlValueAccessor, AfterViewInit 
   @ViewChild('prefixWrapper') prefixWrapper: ElementRef = new ElementRef(null);
   @ViewChild('suffixWrapper') suffixWrapper: ElementRef = new ElementRef(null);
 
-  @ContentChildren('[prefix-icon]', { descendants: true }) prefixIcon1: QueryList<ElementRef> = new QueryList(false);
-  @ContentChild('prefixIcon', { static: false }) prefixIcon: ElementRef = new ElementRef(null);
-  @ContentChild('suffixIcon', { static: false }) suffixIcon: ElementRef = new ElementRef(null);
-
-  @HostBinding('class.has-prefix') hasPrefixIcon = false;
-  @HostBinding('class.has-suffix') hasSuffixIcon = false;
+  @HostBinding('class.has-prefix') get hasPrefixIcon() {
+    this.cdr.detectChanges();
+    return !this.isEmpty(this.prefixWrapper);
+  };
+  @HostBinding('class.has-suffix') get hasSuffixIcon() {
+    this.cdr.detectChanges();
+    return !this.isEmpty(this.suffixWrapper);
+  };
   value: string = '';
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+  ) {
+  }
 
   onChange: any = () => {};
   onTouched: any = () => {};
 
-  ngAfterViewInit() {
-    console.log('Prefix Icon1:', this.prefixIcon1);
-    console.log('Prefix Icon:', !!this.prefixIcon);
-    console.log('Suffix Icon:', this.suffixIcon);
-    this.hasPrefixIcon = !!this.prefixIcon;
-    this.hasSuffixIcon = !!this.suffixIcon;
-    console.log('this.prefixWrapper', this.isEmpty(this.prefixWrapper));
-    console.log('this.suffixWrapper', this.isEmpty(this.suffixWrapper));
-  }
-
   setValue(event: any) {
     const value = get(event, ['target', 'value'], '');
-    console.log("!!!", value)
     if (value || value == 0) {
       this.value = value;
       this.onChange(value);
@@ -69,7 +68,6 @@ export class InputFieldComponent implements ControlValueAccessor, AfterViewInit 
   }
 
   writeValue(value: string): void {
-    console.log('write value', value);
     this.value = value;
   }
 
@@ -82,11 +80,10 @@ export class InputFieldComponent implements ControlValueAccessor, AfterViewInit 
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    // Дополнительный метод для обработки состояния disabled
   }
 
   private isEmpty(element: ElementRef): boolean {
-    console.log('element.nativeElement.children.length', element.nativeElement.children.length)
-    return false;
+    const length: number = get(element, ['nativeElement', 'children', 'length'], 0);
+    return length === 0;
   }
 }

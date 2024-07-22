@@ -1,3 +1,21 @@
+:host {
+  &.has-prefix {
+    .input-field {
+      &__input {
+        padding-left: 18px;
+      }
+
+    }
+  }
+  &.has-suffix {
+    .input-field {
+      &__input {
+        padding-right: 18px;
+      }
+
+    }
+  }
+}
 .input-field {
   display: flex;
   flex-direction: column;
@@ -16,6 +34,7 @@
 
     &--icon {
       position: absolute;
+      width: 14px;
       &.left {
         left: 8px;
       }
