@@ -4,6 +4,7 @@ import {delay} from "rxjs";
 // services
 import { CurrencyService } from "../../services";
 
+import { environment } from "../../../environments/environments";
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ import { CurrencyService } from "../../services";
 export class HeaderComponent implements OnInit {
   public loading: boolean = false;
   public rate: number = NaN;
+  public currencies: Array<string> = environment.mainCurrencies;
 
   constructor(
     private currency: CurrencyService
@@ -26,7 +28,7 @@ export class HeaderComponent implements OnInit {
   console.log('init header')
     this.currency.getList().subscribe((response) => {
       console.log('response', response);
-    })
+    });
   }
 
   private updateRate(): void {
