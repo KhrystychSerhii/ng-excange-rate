@@ -83,6 +83,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
+    console.log('input component', isDisabled);
     const input = this.elementRef.nativeElement.querySelector('input');
     this.renderer.setProperty(input, 'disabled', isDisabled);
     if (isDisabled) {
