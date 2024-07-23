@@ -1,0 +1,10 @@
+<span *ngIf="!!value" class="currency">
+  {{ value | currency: currency : 'symbol-narrow': '1.1' }}
+  <span *ngIf="rate$ | async as rate; else loading">
+    = {{ rate | currency: basic : 'symbol-narrow' }}
+  </span>
+  <ng-template #loading>
+    <span class="fas fa-spinner fa-spin"></span>
+  </ng-template>
+</span>
+

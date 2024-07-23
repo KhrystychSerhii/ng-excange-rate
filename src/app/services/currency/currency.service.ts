@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
-import {map, Observable, of} from "rxjs";
+import {map, Observable, of, tap} from "rxjs";
 
 // types
-import { CurrencyListItem } from "./currency.types";
+import {CurrencyListItem, CurrencyType, CurrencyRate, CurrencyRateInfo} from "./currency.types";
 
 import { environment } from "../../../environments/environments"
 
@@ -30,6 +30,18 @@ export class CurrencyService {
         return response.data;
       })
     );
+  }
+
+  getCurrencyRate(baseCurrency: CurrencyType, currencies?: Array<CurrencyType>): Observable<CurrencyRate> {
+    return this.http.get('https://api.currencyapi.com/v3/latest', { headers: this.headers, params: { base_currency: baseCurrency, currencies: currencies || [] } })
+      .pipe(
+        map((response: any) => {
+          console.log('c', response.data);
+          return response.data;
+        }
+      )
+    );
+    //return of(41.2);
   }
 
   private getHeaders(): HttpHeaders {

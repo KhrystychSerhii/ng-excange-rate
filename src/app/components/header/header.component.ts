@@ -1,15 +1,22 @@
 import {Component, OnInit} from "@angular/core";
+import {CommonModule} from "@angular/common";
 import {delay} from "rxjs";
 
 // services
 import { CurrencyService } from "../../services";
+import {CurrencyWidgetComponent} from "../currency-widget/currency-widget.component";
+import {CurrencyType} from "../../services/currency/currency.types";
+
 
 import { environment } from "../../../environments/environments";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    CurrencyWidgetComponent
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -17,6 +24,9 @@ export class HeaderComponent implements OnInit {
   public loading: boolean = false;
   public rate: number = NaN;
   public currencies: Array<string> = environment.mainCurrencies;
+
+  public basicCur: CurrencyType = 'UAH';
+  public mainCurrencies: Array<CurrencyType> = ['EUR', 'USD'];
 
   constructor(
     private currency: CurrencyService
