@@ -1,2 +1,2 @@
 export * from "./about/about.component";
-export * from "./excange/excange.component";
+export * from "./exchange/exchange.component";

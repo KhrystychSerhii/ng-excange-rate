@@ -1,1 +1,20 @@
-<p>input-field works!</p>
+<div class="input-field">
+  <label class="input-field__label" [for]="id">{{label}}</label>
+  <div class="input-field__wrapper">
+    <span #prefixWrapper class="input-field__wrapper--icon left">
+      <ng-content select="[prefix-icon]"></ng-content>
+    </span>
+    <input
+      class="input-field__input"
+      [id]="id"
+      [value]="value"
+      [placeholder]="placeholder"
+      (input)="setValue($event)"
+      aria-describedby="error"
+    />
+    <span #suffixWrapper class="input-field__wrapper--icon right">
+      <ng-content select="[suffix-icon]"></ng-content>
+    </span>
+  </div>
+  <span *ngIf="!!error" class="input-field__error" id="error">{{error}}</span>
+</div>

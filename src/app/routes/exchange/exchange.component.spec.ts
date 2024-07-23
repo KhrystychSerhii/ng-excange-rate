@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExcangeComponent } from './excange.component';
+import { ExchangeComponent } from './exchange.component';
 
-describe('ExcangeComponent', () => {
-  let component: ExcangeComponent;
-  let fixture: ComponentFixture<ExcangeComponent>;
+describe('ExchangeComponent', () => {
+  let component: ExchangeComponent;
+  let fixture: ComponentFixture<ExchangeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExcangeComponent]
+      imports: [ExchangeComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ExcangeComponent);
+    fixture = TestBed.createComponent(ExchangeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

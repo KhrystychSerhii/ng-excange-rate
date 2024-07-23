@@ -16,7 +16,7 @@ const COMPONENTS = [
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'ng-excange-rate';
+  title = 'ng-exchange-rate';
   sideBarOpened: boolean = false;
 
   setSideBarOpened(value: boolean): void {
