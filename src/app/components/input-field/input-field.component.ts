@@ -6,7 +6,7 @@ import {
   ElementRef,
   forwardRef,
   HostBinding,
-  Input, QueryList, ViewChild
+  Input, QueryList, Renderer2, ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -35,6 +35,7 @@ import {get} from "../../libs/helpers";
 export class InputFieldComponent implements ControlValueAccessor {
   @Input('id') id: string = '';
   @Input('label') label: string = '';
+  @Input('placeholder') placeholder: string = '';
   @Input('error') error: string = '';
 
   @ViewChild('prefixWrapper') prefixWrapper: ElementRef = new ElementRef(null);
@@ -52,6 +53,8 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   constructor(
     private cdr: ChangeDetectorRef,
+    private elementRef: ElementRef,
+    private renderer: Renderer2
   ) {
   }
 
@@ -80,6 +83,13 @@ export class InputFieldComponent implements ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
+    const input = this.elementRef.nativeElement.querySelector('input');
+    this.renderer.setProperty(input, 'disabled', isDisabled);
+    if (isDisabled) {
+      this.renderer.addClass(this.elementRef.nativeElement, 'disabled');
+    } else {
+      this.renderer.removeClass(this.elementRef.nativeElement, 'disabled');
+    }
   }
 
   private isEmpty(element: ElementRef): boolean {
