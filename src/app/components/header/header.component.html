@@ -1,4 +1,11 @@
 <header>
   <ng-content></ng-content>
   <span>{{ rate || 'n/a' }}</span>
+
+
+  <span *ngFor="let c of mainCurrencies; let isLast = last" class="currency-widget-wrapper">
+    <app-currency-widget [basic]="basicCur" [currency]="c"></app-currency-widget>
+    <span *ngIf="!isLast">, </span>
+  </span>
+
 </header>

@@ -31,7 +31,7 @@ export class CurrencyService {
     );
   }
 
-  getCurrencyRate(baseCurrency: CurrencyType, currencies?: Array<CurrencyType>): Observable<CurrencyRateInfo> {
+  getCurrencyRate(baseCurrency: CurrencyType, currencies?: Array<CurrencyType>): Observable<CurrencyRate> {
     return this.http.get('https://api.currencyapi.com/v3/latest', { headers: this.headers, params: { base_currency: baseCurrency, currencies: currencies || [] } })
       .pipe(
         map((response: any) => {
