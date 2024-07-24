@@ -1,0 +1,16 @@
+.exchange-form {
+  max-width: 640px;
+  &__row {
+    display: flex;
+    justify-content: flex-start;
+
+  }
+  &__field {
+    display: flex;
+    width: calc(50% - 4px);
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}

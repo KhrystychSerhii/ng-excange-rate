@@ -87,12 +87,16 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
   }
 
   setValue(event: any) {
+    if (!event) {
+      return;
+    }
     const item: any = this.items.find((i: any) => i[this.valueKey].toLowerCase() === event.toLowerCase());
     if (!!item) {
       this.value = item[this.valueKey].toLowerCase();
       const value = get(item, [this.valueKey], '');
       const label = get(item, [this.labelKey], '');
       if (!!value) {
+        console.log('on change!!', value.toLowerCase())
         this.onChange(value.toLowerCase());
         this.onTouched();
         this.toggleList(true, true);
@@ -115,7 +119,7 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
     if (!value) {
       return;
     }
-    const item = this.items.find((i: any) => i[this.valueKey].toLowerCase() === value);
+    const item = this.items.find((i: any) => i[this.valueKey].toLowerCase() === value.toLowerCase());
     if (!!item) {
       this.inputModel = get(item, [this.labelKey], '');
       this.value = get(item, [this.valueKey], '');
@@ -131,7 +135,6 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    console.log('select component', isDisabled);
     this.disabled = isDisabled;
   }
 
@@ -155,6 +158,9 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
   }
 
   isSameKey(itemValue: string, value: string): boolean {
+    if (!value) {
+      return false;
+    }
     return itemValue.toLowerCase() === value.toLowerCase();
   }
 }
