@@ -1,1 +1,33 @@
-<p>select-field works!</p>
+<div
+  class="select-field"
+  [ngClass]="{'list-opened': listOpened, 'disabled': disabled}"
+>
+  <app-input-field
+    [id]="id"
+    [label]="label"
+    [(ngModel)]="inputModel"
+    (focusin)="focusIn($event)"
+    [disabled]="disabled"
+  >
+    <i
+      suffix-icon
+      (click)="toggleList(listOpened)"
+      class="select-field__chevron-icon fas fa-chevron-down"
+    ></i>
+  </app-input-field>
+
+  <ul class="select-field__list" #listElement>
+    <li *ngFor="let item of items | filter : inputModel : labelKey"
+        class="select-field__list--item"
+        (click)="setValue(item[valueKey])">
+
+      <span class="select-field__list--text">{{ item[labelKey] }}</span>
+      <span class="select-field__list--icon">
+        <i *ngIf="isSameKey(item[valueKey], value)" class="fas fa-check"></i>
+      </span>
+    </li>
+    <li *ngIf="(items | filter : inputModel : labelKey)?.length === 0" class="select-field__list--item no-results">
+      <span class="select-field__list--text">No items found for "{{inputModel}}"</span>
+    </li>
+  </ul>
+</div>

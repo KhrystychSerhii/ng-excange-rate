@@ -1,28 +1,42 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 
-import {InputFieldComponent} from "../../components";
+import {InputFieldComponent, SelectFieldComponent} from "../../components";
+
+import {CurrencyService} from "../../services";
 
 @Component({
   selector: 'app-exchange',
   standalone: true,
-  imports: [InputFieldComponent, ReactiveFormsModule],
+  imports: [InputFieldComponent, ReactiveFormsModule, SelectFieldComponent],
   templateUrl: './exchange.component.html',
   styleUrl: './exchange.component.scss'
 })
 export class ExchangeComponent implements OnInit {
   form: FormGroup;
+  currencies: Array<Object> = [
+    {code: 'EUR', name: 'Euro'},
+    {code: 'USD', name: 'Dollar'},
+    {code: 'UAH', name: 'Hryvna'}
+  ]; // main currencies
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private currency: CurrencyService,
+  ) {
     this.form = this.fb.group({
-      customInput: ['asd']
+      firstValue: [],
+      firstCurrency: ['uah']
     });
   }
 
   ngOnInit() {
+    this.currency.getList().subscribe((response) => {
+      this.currencies = Object.values(response);
+    })
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    this.form.get('firstCurrency')?.disable();
   }
 }

@@ -11,6 +11,7 @@
       [placeholder]="placeholder"
       (input)="setValue($event)"
       aria-describedby="error"
+      autocomplete="off"
     />
     <span #suffixWrapper class="input-field__wrapper--icon right">
       <ng-content select="[suffix-icon]"></ng-content>
