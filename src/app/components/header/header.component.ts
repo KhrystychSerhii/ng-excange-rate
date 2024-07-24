@@ -3,13 +3,12 @@ import {CommonModule} from "@angular/common";
 import {delay} from "rxjs";
 
 import {CurrencyWidgetComponent} from "../currency-widget/currency-widget.component";
+import {ButtonComponent} from "../button/button.component";
 
 // services
 import { CurrencyService, CurrencyType } from "../../services";
 
-
 import { environment } from "../../../environments/environments";
-import {ButtonComponent} from "../button/button.component";
 
 @Component({
   selector: 'app-header',
@@ -36,27 +35,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateRate();
-  console.log('init header')
-    this.currency.getList().subscribe((response) => {
-      console.log('response', response);
-    });
+
   }
 
-  private updateRate(): void {
-    this.loading = true;
-    this.currency.getCurrentRate()
-      .pipe(delay(150))
-      .subscribe({
-        next: (rate: number) => {
-          this.rate = rate;
-        },
-        error: (e) => {
-          console.log(e);
-        },
-        complete: () => {
-          this.loading = false;
-        }
-      });
-  }
 }

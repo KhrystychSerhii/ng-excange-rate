@@ -8,7 +8,7 @@ import {CacheResponse} from "./cache.types";
 })
 export class CacheService {
   private cache = new Map<string, any>();
-  private CACHE_STORE_TIME: number = 5000; // ms
+  private CACHE_STORE_TIME: number = 60000; // ms
 
   constructor() { }
 
