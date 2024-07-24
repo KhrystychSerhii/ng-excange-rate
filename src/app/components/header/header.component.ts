@@ -2,20 +2,22 @@ import {Component, OnInit} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {delay} from "rxjs";
 
-// services
-import { CurrencyService } from "../../services";
 import {CurrencyWidgetComponent} from "../currency-widget/currency-widget.component";
-import {CurrencyType} from "../../services/currency/currency.types";
+
+// services
+import { CurrencyService, CurrencyType } from "../../services";
 
 
 import { environment } from "../../../environments/environments";
+import {ButtonComponent} from "../button/button.component";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
     CommonModule,
-    CurrencyWidgetComponent
+    CurrencyWidgetComponent,
+    ButtonComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'

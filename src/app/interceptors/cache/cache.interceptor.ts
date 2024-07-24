@@ -2,8 +2,7 @@ import {HttpInterceptorFn, HttpResponse} from '@angular/common/http';
 import {inject} from "@angular/core";
 import {of, tap} from "rxjs";
 
-import {CacheService} from "../../services";
-
+import {CacheService, CacheResponse} from "../../services";
 
 export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
   const cacheService = inject(CacheService);
@@ -12,9 +11,9 @@ export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
-  const cacheResponse = cacheService.get(req.urlWithParams);
-  if (cacheResponse) {
-    return of(new HttpResponse({ body: cacheResponse }));
+  const cacheResponse: CacheResponse | null = cacheService.get(req.urlWithParams);
+  if (cacheResponse && !cacheService.isOutdated(cacheResponse)) {
+    return of(new HttpResponse({ body: cacheResponse.body }));
   }
 
   return next(req).pipe(

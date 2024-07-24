@@ -2,8 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {catchError, map, Observable, of, tap} from "rxjs";
 
-import {CurrencyService} from "../../services";
-import {CurrencyRate, CurrencyType} from "../../services/currency/currency.types";
+import {CurrencyService, CurrencyRate, CurrencyType} from "../../services";
 import {get} from "../../libs/helpers";
 
 @Component({
