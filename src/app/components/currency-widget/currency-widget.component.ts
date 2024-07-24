@@ -1,12 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {map, Observable} from "rxjs";
+import {catchError, map, Observable, of, tap} from "rxjs";
 
-import {CurrencyService} from "../../services";
-import {CurrencyRate, CurrencyRateInfo, CurrencyType} from "../../services/currency/currency.types";
-
-
-
+import {CurrencyService, CurrencyRate, CurrencyType} from "../../services";
+import {get} from "../../libs/helpers";
 
 @Component({
   selector: 'app-currency-widget',
@@ -20,6 +17,7 @@ export class CurrencyWidgetComponent implements OnInit {
   @Input('basic') basic: CurrencyType = '';
   @Input('currency') currency: CurrencyType = '';
 
+  error: string = '';
   rate$: Observable<number> = new Observable<number>();
   constructor(
     private currencyService: CurrencyService
@@ -32,11 +30,18 @@ export class CurrencyWidgetComponent implements OnInit {
   public getRate(value: number, basic: CurrencyType, currency: CurrencyType): Observable<any> {
     return this.currencyService.getCurrencyRate(basic, [currency])
       .pipe(
+        tap(() => {
+          this.error = '';
+        }),
         map((response: CurrencyRate) => {
           return response[currency].value;
         }),
         map((rate: number) => {
           return value / rate;
+        }),
+        catchError((error: any) => {
+          this.error = get(error, ['error', 'message'], '');
+          return of(null);
         })
       );
   }
