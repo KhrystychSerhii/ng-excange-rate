@@ -50,13 +50,21 @@
       transition: background-color 0.3s;
       cursor: pointer;
 
+      &.no-results {
+        cursor: not-allowed;
+        user-select: none;
+      }
+
       &:last-child {
         border-bottom: none;
       }
 
-      &:hover {
-        background-color: #ddd;
+      &:not(.no-results) {
+        &:hover {
+          background-color: #ddd;
+        }
       }
+
     }
 
     &--icon {

@@ -154,10 +154,6 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
     this.toggleList(!this.focused);
   }
 
-  focusOut(event: any) {
-    this.setValue(this.value);
-  }
-
   isSameKey(itemValue: string, value: string): boolean {
     return itemValue.toLowerCase() === value.toLowerCase();
   }

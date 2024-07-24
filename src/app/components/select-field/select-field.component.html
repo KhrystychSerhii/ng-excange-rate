@@ -7,7 +7,6 @@
     [label]="label"
     [(ngModel)]="inputModel"
     (focusin)="focusIn($event)"
-    (focusout)="focusOut($event)"
     [disabled]="disabled"
   >
     <i
@@ -26,6 +25,9 @@
       <span class="select-field__list--icon">
         <i *ngIf="isSameKey(item[valueKey], value)" class="fas fa-check"></i>
       </span>
+    </li>
+    <li *ngIf="(items | filter : inputModel : labelKey)?.length === 0" class="select-field__list--item no-results">
+      <span class="select-field__list--text">No items found for "{{inputModel}}"</span>
     </li>
   </ul>
 </div>
