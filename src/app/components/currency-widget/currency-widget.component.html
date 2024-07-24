@@ -4,7 +4,8 @@
     = {{ rate | currency: basic : 'symbol-narrow' }}
   </span>
   <ng-template #loading>
-    <span class="fas fa-spinner fa-spin"></span>
+    <span *ngIf="error" class="fas fa-warning c-pointer" [title]="error"></span>
+    <span *ngIf="!error" class="fas fa-spinner fa-spin"></span>
   </ng-template>
 </span>
 
