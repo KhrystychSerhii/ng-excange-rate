@@ -1,5 +1,5 @@
-import {Component, OnInit} from "@angular/core";
-import {CommonModule} from "@angular/common";
+import {AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit} from "@angular/core";
+import {CommonModule, DOCUMENT} from "@angular/common";
 import {delay} from "rxjs";
 
 import {CurrencyWidgetComponent} from "../currency-widget/currency-widget.component";
@@ -21,16 +21,20 @@ import { environment } from "../../../environments/environments";
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   public loading: boolean = false;
-  public rate: number = NaN;
-  public currencies: Array<string> = environment.mainCurrencies;
-
-  public basicCur: CurrencyType = 'UAH';
+  public basicCur: CurrencyType = environment.mainCurrency;
   public mainCurrencies: Array<CurrencyType> = ['EUR', 'USD'];
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.writeElementHeightInStyles();
+  }
+
   constructor(
-    private currency: CurrencyService
+    private currency: CurrencyService,
+    private elementRef: ElementRef,
+    @Inject(DOCUMENT) private document: Document
   ) {
   }
 
@@ -38,4 +42,14 @@ export class HeaderComponent implements OnInit {
 
   }
 
+  ngAfterViewInit() {
+    this.writeElementHeightInStyles();
+  }
+
+
+  private writeElementHeightInStyles(): void {
+    const height: number = this.elementRef.nativeElement.offsetHeight;
+    const rootElement: HTMLElement = this.document.documentElement;
+    rootElement.style.setProperty('--header-height', `${height}px`);
+  }
 }
