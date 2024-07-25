@@ -3,13 +3,13 @@ import {
   Component,
   ElementRef,
   forwardRef,
-  HostListener, Inject,
+  HostListener,
   Input, OnDestroy,
   Renderer2,
   ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {CommonModule, DOCUMENT} from "@angular/common";
+import {CommonModule} from "@angular/common";
 
 import {InputFieldComponent} from "../input-field/input-field.component";
 
@@ -61,8 +61,7 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
 
   constructor(
     private elementRef: ElementRef,
-    private renderer: Renderer2,
-    @Inject(DOCUMENT) private document: Document
+    private renderer: Renderer2
   ) {
   }
 
@@ -74,7 +73,7 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
       if (this.listElement) {
         const value: number = get(this.listElement, ['nativeElement', 'children', '0', 'offsetHeight'], null);
         if (!!value) {
-          this.renderer.setStyle(this.document.documentElement, '--list-item-height', value + "px");
+          this.elementRef.nativeElement.style.setProperty('--list-item-height', `${(value + 2) * 4}px`);
         }
       }
     });

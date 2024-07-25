@@ -1,9 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
 body {
+  font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
   display: flex;
-  height: 100vh;
+  height: calc(var(--vh)* 100);
+  overflow: hidden;
 }
 .c-pointer {
   cursor: pointer;

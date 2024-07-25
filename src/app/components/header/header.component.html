@@ -1,11 +1,14 @@
-<header>
-  <ng-content></ng-content>
-  <span>{{ rate || 'n/a' }}</span>
+<header class="header">
+  <div class="header__left">
+    <ng-content></ng-content>
+  </div>
 
-
-  <span *ngFor="let c of mainCurrencies; let isLast = last" class="currency-widget-wrapper">
-    <app-currency-widget [basic]="basicCur" [currency]="c"></app-currency-widget>
-    <span *ngIf="!isLast">, </span>
-  </span>
-
+  <div class="header__right">
+    <ul class="header__currency-list">
+      <li *ngFor="let c of mainCurrencies; let isLast = last" class="header__currency-list--item">
+        <app-currency-widget [basic]="basicCur" [currency]="c"></app-currency-widget>
+        <span *ngIf="!isLast">, </span>
+      </li>
+    </ul>
+  </div>
 </header>

@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
+import {AfterViewInit, Component, HostListener, Inject} from "@angular/core";
 import { RouterOutlet } from '@angular/router';
 
 // component
 import {CurrencyWidgetComponent, HeaderComponent, SidebarComponent, ButtonComponent} from "./components";
+import {DOCUMENT} from "@angular/common";
 
 const COMPONENTS = [
   CurrencyWidgetComponent,
@@ -18,12 +19,31 @@ const COMPONENTS = [
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = 'ng-exchange-rate';
   sideBarOpened: boolean = false;
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.writeElementHeightInStyles();
+  }
+  constructor(
+    @Inject(DOCUMENT) private document: Document
+  ) {
+  }
+
+  ngAfterViewInit() {
+    this.writeElementHeightInStyles();
+  }
+
   setSideBarOpened(value: boolean): void {
-    console.log('toggleSideBar');
     this.sideBarOpened = value;
+  }
+
+  private writeElementHeightInStyles(): void {
+    const viewportHeight: number = this.document.documentElement.clientHeight;
+    const vh = viewportHeight / 100;
+    const rootElement: HTMLElement = this.document.documentElement;
+    rootElement.style.setProperty('--vh', `${vh}px`);
   }
 }

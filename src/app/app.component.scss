@@ -1,8 +1,17 @@
+@import "variables";
+
 :host {
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100%;
+}
+
+.header-button {
+  display: none;
+  @media (max-width: $md) {
+    display: flex;
+  }
 }
 
 .container {
