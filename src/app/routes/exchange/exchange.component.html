@@ -1,15 +1,3 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-input-field id="value-1" label="Value" formControlName="firstValue">
-    <i prefix-icon class="fas fa-check"></i>
-    <i suffix-icon class="fas fa-close"></i>
-  </app-input-field>
-  <app-select-field
-    id="currency-1"
-    label="Currency"
-    formControlName="firstCurrency"
-    value-key="code"
-    label-key="name"
-    [items]="currencies"
-  ></app-select-field>
-  <button type="submit">Submit</button>
+  <app-exchange-form [currencies]="currencies"></app-exchange-form>
 </form>

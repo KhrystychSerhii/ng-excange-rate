@@ -1,14 +1,14 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 
-import {InputFieldComponent, SelectFieldComponent} from "../../components";
+import {ExchangeFormComponent, InputFieldComponent, SelectFieldComponent} from "../../components";
 
 import {CurrencyService} from "../../services";
 
 @Component({
   selector: 'app-exchange',
   standalone: true,
-  imports: [InputFieldComponent, ReactiveFormsModule, SelectFieldComponent],
+  imports: [InputFieldComponent, ReactiveFormsModule, SelectFieldComponent, ExchangeFormComponent],
   templateUrl: './exchange.component.html',
   styleUrl: './exchange.component.scss'
 })
@@ -31,9 +31,10 @@ export class ExchangeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currency.getList().subscribe((response) => {
+   /* this.currency.getList().subscribe((response) => {
       this.currencies = Object.values(response);
-    })
+      console.log('this.currencies', this.currencies)
+    });*/
   }
 
   onSubmit() {

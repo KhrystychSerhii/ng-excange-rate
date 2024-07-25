@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExcangeFormComponent } from './excange-form.component';
+import { ExchangeFormComponent } from './exchange-form.component';
 
-describe('ExcangeFormComponent', () => {
-  let component: ExcangeFormComponent;
-  let fixture: ComponentFixture<ExcangeFormComponent>;
+describe('ExchangeFormComponent', () => {
+  let component: ExchangeFormComponent;
+  let fixture: ComponentFixture<ExchangeFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExcangeFormComponent]
+      imports: [ExchangeFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ExcangeFormComponent);
+    fixture = TestBed.createComponent(ExchangeFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
