@@ -96,7 +96,6 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
       const value = get(item, [this.valueKey], '');
       const label = get(item, [this.labelKey], '');
       if (!!value) {
-        console.log('on change!!', value.toLowerCase())
         this.onChange(value.toLowerCase());
         this.onTouched();
         this.toggleList(true, true);

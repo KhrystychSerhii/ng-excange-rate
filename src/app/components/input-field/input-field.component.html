@@ -6,6 +6,7 @@
     </span>
     <input
       class="input-field__input"
+      [ngClass]="{'error': !!error}"
       [id]="id"
       [value]="value"
       [type]="type"

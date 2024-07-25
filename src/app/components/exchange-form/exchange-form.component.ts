@@ -1,5 +1,7 @@
-import {Component, Input} from "@angular/core";
-import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {debounceTime, Subject, takeUntil} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
 
 import {CurrencyRate, CurrencyService} from "../../services";
 
@@ -9,12 +11,13 @@ import {SelectFieldComponent} from "../select-field/select-field.component";
 import {FilterPipe} from "../../pipes";
 
 import {get} from "../../libs/helpers";
-
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-exchange-form',
   standalone: true,
   imports: [
+    CommonModule,
     InputFieldComponent,
     SelectFieldComponent,
     ReactiveFormsModule,
@@ -23,52 +26,25 @@ import {get} from "../../libs/helpers";
   templateUrl: './exchange-form.component.html',
   styleUrl: './exchange-form.component.scss'
 })
-export class ExchangeFormComponent {
+export class ExchangeFormComponent implements OnInit, OnDestroy {
   @Input('currencies') currencies: Array<Object> = [];
-  form: FormGroup;
-
-  lastChangedField: string = '';
+  form: FormGroup = new FormGroup<any>({});
+  loading: boolean = false;
+  error: string = '';
+  private destroyed$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
     private currencyService: CurrencyService
-  ) {
-    this.form = this.getFormGroup();
-
-    this.form.valueChanges.subscribe(value => {
-      console.log('this.lastChangedField', this.lastChangedField);
-      console.log('value', value);
-      this.onFieldChange(this.lastChangedField, value);
-    });
-  }
+  ) {}
 
   ngOnInit() {
-    this.subscribeToFieldChanges(this.form);
+    this.form = this.getFormGroup();
   }
 
-  test(form: FormGroup) {
-    console.log('form', form);
-  }
-
-  subscribeToFieldChanges(form: FormGroup) {
-    Object.keys(form.controls).forEach((controlName: string) => {
-      const control = form.get(controlName) as AbstractControl;
-      control.valueChanges.subscribe(() => {
-        this.lastChangedField = controlName;
-
-      });
-    });
-  }
-
-
-  onFieldChange(fieldName: string, values: Object) {
-
-    const activeValue: number = get(values, [fieldName, 'value'], null);
-    const activeCurrency: string = get(values, [fieldName, 'currency'], null);
-    const secondaryFormGroupNames: Array<string> = Object
-      .keys(this.form.value) // ['one', 'two']
-      .filter((name: string) => name !== fieldName); // ['one']
-    this.makeRequest(activeValue, activeCurrency, secondaryFormGroupNames);
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   filtered(currencies: Array<Object>, code?: string): Array<Object> {
@@ -81,36 +57,75 @@ export class ExchangeFormComponent {
     })
   }
 
-  private makeRequest(value: number, currency: string, secondaryFormGroupNames: Array<string>) {
-    const currencies: Array<string> = secondaryFormGroupNames
-      .map((name: string) => get(this.form, ['value', name, 'currency'], ''))
-      .filter((name: string) => !!name);
+  private makeRequest(value: any, active: 'base' | 'second'): void {
+    const secondaryFormNames: Array<string> = Object.keys(value)
+      .filter((name: string) => name !== active);
+    const currencies: Array<string> = secondaryFormNames
+      .map((name: string) => get(value, [name, 'currency'], ''));
 
-    this.currencyService.getCurrencyRate(currency, currencies)
-      .subscribe((response: CurrencyRate) => {
-        secondaryFormGroupNames
-          .forEach((name: string): void => {
+    const currency = get(value, [active, 'currency'], '');
+    if (!!currency && currencies.length > 0) {
+      this.currencyService.getCurrencyRate(currency, currencies)
+        .subscribe({
+          next: (response: CurrencyRate) => {
+            secondaryFormNames
+              .forEach((name: string): void => {
+
+                const v: number = get(value, [active, 'value'], null);
+                const control: FormControl | null = this.form.get([name, 'value']) as FormControl;
+                const code: string = get(value, [name, 'currency'], '');
+                const rate: number = get(response, [code, 'value'], null);
+
+                if (control && rate) {
+                  control.setValue(v * rate, { onlySelf: true });
+                }
+              });
+          },
+          error: (error: HttpErrorResponse) => {
+            this.loading = false;
+            this.error = get(error, ['error', 'message'], '');
 
 
-            const control: AbstractControl | null = this.form.get([name, 'value']) as AbstractControl;
-            const code: string = get(this.form, ['value', name, 'currency'], '');
-            const rate: number = get(response, [code, 'value'], null);
-            if (control) {
-              control.setValue(value * rate, { onlySelf: true });
-            }
-          });
-      });
+          },
+          complete: () => {
+            this.loading = false;
+          }
+        });
+    }
   }
 
   private getFormGroup(): FormGroup {
+    const baseValueFormControl: FormControl = this.fb.control('', [Validators.required]);
+    const secondaryValueFormControl: FormControl = this.fb.control('', [Validators.required]);
+    const baseCurrencyFormControl: FormControl = this.fb.control('UAH', []); // can be received from .env
+    const secondaryCurrencyFormControl: FormControl = this.fb.control('USD', []); // can be received from .env
+
+    const controls: Array<{ formName: 'second' | 'base'; fieldName: string; control: FormControl; }> = [
+      { formName: 'base', fieldName: 'value', control: baseValueFormControl },
+      { formName: 'base', fieldName: 'currency', control: baseCurrencyFormControl },
+
+      { formName: 'second', fieldName: 'value', control: secondaryValueFormControl },
+      { formName: 'second', fieldName: 'currency', control: secondaryCurrencyFormControl },
+    ];
+
+    controls.forEach(({ formName, fieldName, control}) => {
+      control.valueChanges
+        .pipe(
+          debounceTime(500),
+          takeUntil(this.destroyed$)
+        )
+        .subscribe((value: string) => {
+          this.makeRequest(this.form.value, formName);
+        });
+    });
     return this.fb.group({
       base: this.fb.group({
-        value: this.fb.control('', [Validators.required]),
-        currency: ['UAH'],
+        value: baseValueFormControl,
+        currency: baseCurrencyFormControl,
       }),
       second: this.fb.group({
-        value: this.fb.control('', [Validators.required]),
-        currency: ['USD']
+        value: secondaryValueFormControl,
+        currency: secondaryCurrencyFormControl
       })
     });
 

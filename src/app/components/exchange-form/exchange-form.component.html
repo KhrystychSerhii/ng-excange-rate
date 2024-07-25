@@ -1,4 +1,4 @@
-<form [formGroup]="form" class="exchange-form" (change)="test(form)">
+<form [formGroup]="form" class="exchange-form">
   <div formGroupName="base" class="exchange-form__row">
     <app-input-field
       class="exchange-form__field"
@@ -39,5 +39,11 @@
     >
 
     </app-select-field>
+  </div>
+
+  <div *ngIf="!!error" class="exchange-form__row">
+    <span class="exchange-form__error">
+      {{ error }}
+    </span>
   </div>
 </form>
