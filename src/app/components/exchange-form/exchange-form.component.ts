@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {debounceTime, Subject, takeUntil} from "rxjs";
+import {debounceTime, Subject, takeUntil, tap} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 
 import {CurrencyRate, CurrencyService} from "../../services";
@@ -65,6 +65,8 @@ export class ExchangeFormComponent implements OnInit, OnDestroy {
 
     const currency = get(value, [active, 'currency'], '');
     if (!!currency && currencies.length > 0) {
+      this.error = '';
+      this.loading = false;
       this.currencyService.getCurrencyRate(currency, currencies)
         .subscribe({
           next: (response: CurrencyRate) => {
