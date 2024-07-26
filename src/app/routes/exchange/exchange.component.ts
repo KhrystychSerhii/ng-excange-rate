@@ -17,25 +17,7 @@ export class ExchangeComponent implements OnInit {
   currencies: Array<Object> = [
     {code: 'EUR', name: 'Euro'},
     {code: 'USD', name: 'Dollar'},
-
-    {code: 'GBP', name: 'Pound Sterling'},
-    {code: 'JPY', name: 'Yen'},
-    {code: 'AUD', name: 'Australian Dollar'},
-    {code: 'CAD', name: 'Canadian Dollar'},
-    {code: 'CHF', name: 'Swiss Franc'},
-    {code: 'CNY', name: 'Yuan'},
-    {code: 'SEK', name: 'Swedish Krona'},
-    {code: 'NZD', name: 'New Zealand Dollar'},
-    {code: 'MXN', name: 'Mexican Peso'},
-    {code: 'SGD', name: 'Singapore Dollar'},
-    {code: 'HKD', name: 'Hong Kong Dollar'},
-    {code: 'NOK', name: 'Norwegian Krone'},
-    {code: 'UAH', name: 'Hryvna'},
-    {code: 'KRW', name: 'Won'},
-    {code: 'TRY', name: 'Turkish Lira'},
-    {code: 'INR', name: 'Indian Rupee'},
-    {code: 'RUB', name: 'Russian Ruble'},
-    {code: 'BRL', name: 'Brazilian Real'}
+    {code: 'UAH', name: 'Hryvna'}
   ]; // main currencies
 
   constructor(
