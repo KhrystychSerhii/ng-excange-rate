@@ -1,0 +1,10 @@
+@import "colors";
+
+.currency {
+  .fa-warning {
+    color: $warning-color;
+  }
+  .fa-spinner {
+    color: $accent-color;
+  }
+}

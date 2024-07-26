@@ -1,8 +1,4 @@
-$primary-color: #333;
-$secondary-color: #f4f4f4;
-$accent-color: #007bff;
-$success-color: #28a745;
-$font-size: 16px;
+@import "colors";
 
 .custom-list {
   list-style: none;
@@ -13,7 +9,7 @@ $font-size: 16px;
     padding: 10px;
     margin-bottom: 5px;
     border-radius: 4px;
-    font-size: $font-size;
+    font-size: 16px;
     color: $primary-color;
     position: relative;
 
