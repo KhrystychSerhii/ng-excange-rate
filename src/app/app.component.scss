@@ -16,11 +16,14 @@
 
 .container {
   display: flex;
-  height: 100%;
+
+
 }
 
 
 .content {
   flex: 1;
   padding: 20px;
+  height: calc(var(--vh) * 100 - var(--header-height) - 40px);
+  overflow: auto;
 }
