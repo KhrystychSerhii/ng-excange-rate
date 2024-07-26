@@ -31,10 +31,9 @@ export class ExchangeComponent implements OnInit {
   }
 
   ngOnInit() {
-   /* this.currency.getList().subscribe((response) => {
+    this.currency.getList().subscribe((response) => {
       this.currencies = Object.values(response);
-      console.log('this.currencies', this.currencies)
-    });*/
+    });
   }
 
   onSubmit() {

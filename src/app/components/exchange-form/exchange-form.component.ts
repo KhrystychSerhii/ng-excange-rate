@@ -58,36 +58,38 @@ export class ExchangeFormComponent implements OnInit, OnDestroy {
   }
 
   private makeRequest(value: any, active: 'base' | 'second'): void {
+    const activeValue: number = get(value, [active, 'value'], null);
+    if (!activeValue) {
+      return;
+    }
     const secondaryFormNames: Array<string> = Object.keys(value)
       .filter((name: string) => name !== active);
     const currencies: Array<string> = secondaryFormNames
-      .map((name: string) => get(value, [name, 'currency'], ''));
+      .map((name: string) => get(value, [name, 'currency'], ''))
+      .map((name: string) => name.toUpperCase());
 
-    const currency = get(value, [active, 'currency'], '');
+    const currency: string = get(value, [active, 'currency'], '').toUpperCase();
     if (!!currency && currencies.length > 0) {
       this.error = '';
       this.loading = false;
+
       this.currencyService.getCurrencyRate(currency, currencies)
         .subscribe({
           next: (response: CurrencyRate) => {
+
             secondaryFormNames
               .forEach((name: string): void => {
-
-                const v: number = get(value, [active, 'value'], null);
                 const control: FormControl | null = this.form.get([name, 'value']) as FormControl;
-                const code: string = get(value, [name, 'currency'], '');
+                const code: string = get(value, [name, 'currency'], '').toUpperCase();
                 const rate: number = get(response, [code, 'value'], null);
-
                 if (control && rate) {
-                  control.setValue(v * rate, { onlySelf: true });
+                  control.setValue(activeValue * rate, { onlySelf: true, emitEvent: false });
                 }
               });
           },
           error: (error: HttpErrorResponse) => {
             this.loading = false;
             this.error = get(error, ['error', 'message'], '');
-
-
           },
           complete: () => {
             this.loading = false;
