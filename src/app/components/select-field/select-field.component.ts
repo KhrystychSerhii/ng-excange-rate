@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectorRef,
   Component,
   ElementRef,
   forwardRef,
@@ -16,6 +16,7 @@ import {InputFieldComponent} from "../input-field/input-field.component";
 import {FilterPipe} from "../../pipes";
 
 import {get} from "../../libs/helpers";
+
 
 @Component({
   selector: 'app-select-field',
@@ -61,7 +62,8 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
 
   constructor(
     private elementRef: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -74,6 +76,12 @@ export class SelectFieldComponent implements ControlValueAccessor, AfterViewInit
         const value: number = get(this.listElement, ['nativeElement', 'children', '0', 'offsetHeight'], null);
         if (!!value) {
           this.elementRef.nativeElement.style.setProperty('--list-item-height', `${(value + 2) * 4}px`);
+        }
+        if (this.listOpened) {
+          const element = this.elementRef.nativeElement.querySelector(`.selected`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
         }
       }
     });
