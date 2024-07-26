@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   private writeElementHeightInStyles(): void {
     const height: number = this.elementRef.nativeElement.offsetHeight;
     const rootElement: HTMLElement = this.document.documentElement;
+
     rootElement.style.setProperty('--header-height', `${height}px`);
   }
 }

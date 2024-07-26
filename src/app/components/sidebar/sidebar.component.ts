@@ -38,8 +38,6 @@ export class SidebarComponent implements OnInit {
       )
       .subscribe((event: NavigationEnd) => {
         this.close.emit();
-        console.log('Route changed to:', event.urlAfterRedirects);
-        // Здесь можно выполнять любые действия при смене маршрута
       });
   }
 
