@@ -19,6 +19,7 @@
   <ul class="select-field__list" #listElement>
     <li *ngFor="let item of items | filter : inputModel : labelKey"
         class="select-field__list--item"
+        [class.selected]="isSameKey(item[valueKey], value)"
         (click)="setValue(item[valueKey])">
 
       <span class="select-field__list--text">{{ item[labelKey] }}</span>

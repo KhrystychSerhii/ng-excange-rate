@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, HostListener, Inject} from "@angular/core";
 import { RouterOutlet } from '@angular/router';
+import {DOCUMENT} from "@angular/common";
 
 // component
 import {CurrencyWidgetComponent, HeaderComponent, SidebarComponent, ButtonComponent} from "./components";
-import {DOCUMENT} from "@angular/common";
 
 const COMPONENTS = [
   CurrencyWidgetComponent,
