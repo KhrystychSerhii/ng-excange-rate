@@ -1,0 +1,86 @@
+@import "colors";
+
+.list-opened {
+  .select-field {
+
+    &__chevron-icon {
+      transform: rotateX(180deg);
+    }
+
+    &__list {
+      display: block;
+      height: auto;
+      max-height: var(--list-item-height);
+      overflow: auto;
+    }
+  }
+}
+.disabled {
+  .select-field {
+
+    &__chevron-icon {
+      cursor: not-allowed;
+    }
+  }
+}
+.select-field {
+  position: relative;
+  width: 100%;
+  &__chevron-icon {
+    padding-right: 6px;
+    cursor: pointer;
+    transition: transform .5s;
+  }
+
+  &__list {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: calc(100% - 1px);
+    top: calc(100% - 8px);
+    height: 0;
+    transition: height .5s;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: $secondary-color;
+    border: 1px solid $secondary-accent-color;
+    border-radius: 4px;
+
+    &--item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid $secondary-accent-color;
+      transition: background-color 0.3s;
+      cursor: pointer;
+
+      &.no-results {
+        cursor: not-allowed;
+        user-select: none;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:not(.no-results) {
+        &:hover {
+          background-color: $secondary-accent-color;
+        }
+      }
+
+    }
+
+    &--icon {
+      font-size: 20px;
+      color: $primary-color;
+    }
+
+    &--text {
+      flex: 1;
+      color: $primary-color;
+    }
+  }
+}

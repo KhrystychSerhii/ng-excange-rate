@@ -1,0 +1,49 @@
+<form [formGroup]="form" class="exchange-form">
+  <div formGroupName="base" class="exchange-form__row">
+    <app-input-field
+      class="exchange-form__field"
+      label="Enter value"
+      type="number"
+      formControlName="value"
+    >
+
+    </app-input-field>
+    <app-select-field
+      class="exchange-form__field"
+      [items]="filtered(currencies, form.get('second.currency')?.value)"
+      label="Select currency"
+      formControlName="currency"
+      value-key="code"
+      label-key="name"
+    >
+
+    </app-select-field>
+  </div>
+
+  <div formGroupName="second" class="exchange-form__row">
+    <app-input-field
+      class="exchange-form__field"
+      label="Enter value"
+      type="number"
+      formControlName="value"
+    >
+
+    </app-input-field>
+    <app-select-field
+      class="exchange-form__field"
+      [items]="filtered(currencies, form.get('base.currency')?.value)"
+      label="Select currency"
+      formControlName="currency"
+      value-key="code"
+      label-key="name"
+    >
+
+    </app-select-field>
+  </div>
+
+  <div *ngIf="!!error" class="exchange-form__row">
+    <span class="exchange-form__error">
+      {{ error }}
+    </span>
+  </div>
+</form>

@@ -1,0 +1,23 @@
+<div class="input-field">
+  <label class="input-field__label" [for]="id">{{label}}</label>
+  <div class="input-field__wrapper">
+    <span #prefixWrapper class="input-field__wrapper--icon left">
+      <ng-content select="[prefix-icon]"></ng-content>
+    </span>
+    <input
+      class="input-field__input"
+      [ngClass]="{'error': !!error}"
+      [id]="id"
+      [value]="value"
+      [type]="type"
+      [placeholder]="placeholder"
+      (input)="setValue($event)"
+      aria-describedby="error"
+      autocomplete="off"
+    />
+    <span #suffixWrapper class="input-field__wrapper--icon right">
+      <ng-content select="[suffix-icon]"></ng-content>
+    </span>
+  </div>
+  <span *ngIf="!!error" class="input-field__error" id="error">{{error}}</span>
+</div>

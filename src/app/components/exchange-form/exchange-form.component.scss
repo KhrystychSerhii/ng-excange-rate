@@ -1,0 +1,25 @@
+@import "colors";
+@import "sizes";
+
+.exchange-form {
+  max-width: $form-width;
+  &__row {
+    display: flex;
+    justify-content: flex-start;
+
+  }
+  &__field {
+    display: flex;
+    width: calc(50% - 4px);
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+
+  &__error {
+    font-size: 15px;
+    color: $error-color;
+    margin-top: 4px;
+  }
+}

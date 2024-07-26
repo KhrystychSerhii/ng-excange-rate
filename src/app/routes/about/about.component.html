@@ -1,0 +1,26 @@
+<ul class="custom-list">
+  <li *ngFor="let task of (tasks$ | async); trackBy: trackById" class="custom-list__item">
+    <i *ngIf="isTaskFullyCompleted(task)" class="fa fa-check custom-list__item--icon"></i>
+    <b>{{ task.title }}</b>
+    <ul class="custom-list__sublist lower-alpha">
+      <li
+        *ngFor="let subTask of task.subTasks; trackBy: trackById"
+        class="custom-list__subitem lower-alpha"
+        [class.completed]="subTask.completed"
+        [class.checked]="isTaskFullyCompleted(subTask)"
+      >
+        <i *ngIf="isTaskFullyCompleted(task)" class="fa fa-check custom-list__item--icon"></i>
+        {{ subTask.title }}
+        <ul class="custom-list__sublist lower-roman">
+          <li
+            *ngFor="let subSubTask of subTask?.subTasks; trackBy: trackById"
+            class="custom-list__subitem"
+            [class.completed]="subSubTask.completed"
+          >
+            {{ subSubTask.title }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>

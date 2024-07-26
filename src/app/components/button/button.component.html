@@ -1,0 +1,8 @@
+<button [ngClass]="['btn', 'btn-' + size]" [attr.type]="type">
+  <ng-container *ngIf="icon">
+    <i class="icon {{ icon }} {{ !label ? 'no-text' : '' }}"></i>
+  </ng-container>
+  <ng-container *ngIf="label">
+    {{ label }}
+  </ng-container>
+</button>

@@ -1,0 +1,41 @@
+@import "breakpoints";
+@import "colors";
+
+.header {
+  background-color: $primary-color;
+  color: $white-color;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__left {
+
+  }
+
+  &__right {
+
+  }
+
+  &__currency-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    &--item {
+      margin-right: 5px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+      @media (max-width: $sm) {
+        margin-right: 0;
+      }
+    }
+    @media (max-width: $sm) {
+      flex-direction: column;
+    }
+    //
+  }
+
+}

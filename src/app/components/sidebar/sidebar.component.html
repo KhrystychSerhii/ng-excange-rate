@@ -1,0 +1,11 @@
+<div class="background" (click)="close.emit()"></div>
+<aside class="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <li *ngFor="let route of routes" [routerLinkActive]="['active']" [routerLink]="route.path" class="nav-item">
+        <a class="nav-link" [routerLink]="route.path">{{ route.label }}</a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+

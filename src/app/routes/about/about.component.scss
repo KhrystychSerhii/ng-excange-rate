@@ -1,0 +1,61 @@
+@import "colors";
+
+.custom-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  &__item {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    font-size: 16px;
+    color: $primary-color;
+    position: relative;
+
+    &--icon {
+      position: absolute;
+      left: -7px;
+      top: 13px;
+      color: $success-color;
+    }
+  }
+  &__sublist {
+    list-style: none;
+    padding-left: 20px;
+    margin: 5px 0 0;
+
+    &.lower-alpha {
+      list-style: lower-alpha;
+    }
+    &.lower-roman {
+      list-style: lower-roman;
+    }
+  }
+  &__subitem {
+    position: relative;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+
+    .custom-list__item--icon {
+      display: none;
+    }
+
+    &.completed {
+      text-decoration: line-through;
+    }
+
+    &.checked {
+      text-decoration: none;
+      .custom-list__item--icon {
+        left: -35px;
+      }
+      .custom-list__item--icon {
+        display: inline;
+      }
+    }
+
+
+  }
+}
