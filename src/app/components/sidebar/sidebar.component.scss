@@ -1,8 +1,8 @@
-@import "variables";
+@import "breakpoints";
+@import "colors";
+@import "sizes";
 
 :host {
-
-
   .background {
     display: none;
     position: fixed;
@@ -11,7 +11,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: rgba(51, 51, 51, 0.5);
+    background-color: rgba($primary-color, 0.5);
   }
 
   @media (max-width: $md) {
@@ -32,7 +32,7 @@
     &.closed {
       .sidebar {
         position: absolute;
-        transform: translateX(-200px);
+        transform: translateX(calc($sidebar-width * -1));
         z-index: 111;
       }
 
@@ -45,16 +45,16 @@
   }
 }
 .sidebar {
-  width: 200px;
-  background-color: #f4f4f4;
+  width: $sidebar-width;
+  background-color: $secondary-color;
   transition: transform 0.2s;
 
   height: calc(100vh - 42px);
 
   .sidebar-nav {
-    background: #f4f4f4;
+    background: $secondary-color;
     padding: 10px;
-    border-right: 1px solid #ddd;
+    border-right: 1px solid $secondary-accent-color;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -72,21 +72,21 @@
 
   .active {
     .nav-link {
-      background-color: #007bff;
-      color: #fff;
+      background-color: $accent-color;
+      color: $white-color;
       border-radius: 4px;
     }
   }
   .nav-link {
     text-decoration: none;
-    color: #333;
+    color: $primary-color;
     padding: 10px;
     display: block;
     transition: background-color 0.3s, color 0.3s;
 
     &:hover {
-      background-color: #ddd;
-      color: #000;
+      background-color: $secondary-accent-color;
+      color: $black-color;
       border-radius: 4px;
     }
   }

@@ -1,3 +1,5 @@
+@import "colors";
+
 .list-opened {
   .select-field {
 
@@ -42,15 +44,15 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    background: #f4f4f4;
-    border: 1px solid #ddd;
+    background: $secondary-color;
+    border: 1px solid $secondary-accent-color;
     border-radius: 4px;
 
     &--item {
       display: flex;
       align-items: center;
       padding: 10px;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $secondary-accent-color;
       transition: background-color 0.3s;
       cursor: pointer;
 
@@ -65,7 +67,7 @@
 
       &:not(.no-results) {
         &:hover {
-          background-color: #ddd;
+          background-color: $secondary-accent-color;
         }
       }
 
@@ -73,12 +75,12 @@
 
     &--icon {
       font-size: 20px;
-      color: #333;
+      color: $primary-color;
     }
 
     &--text {
       flex: 1;
-      color: #333;
+      color: $primary-color;
     }
   }
 }

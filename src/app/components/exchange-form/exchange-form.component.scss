@@ -1,5 +1,8 @@
+@import "colors";
+@import "sizes";
+
 .exchange-form {
-  max-width: 640px;
+  max-width: $form-width;
   &__row {
     display: flex;
     justify-content: flex-start;
@@ -16,7 +19,7 @@
 
   &__error {
     font-size: 15px;
-    color: #dc3545;
+    color: $error-color;
     margin-top: 4px;
   }
 }

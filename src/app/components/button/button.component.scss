@@ -1,3 +1,5 @@
+@import "colors";
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -33,7 +35,7 @@
   }
 
   &:hover {
-    background-color: #ddd;
+    background-color: $secondary-accent-color;
   }
   &:active {
     transform: scale(0.99);

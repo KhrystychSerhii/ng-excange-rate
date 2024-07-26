@@ -1,10 +1,11 @@
+@import "colors";
+
 :host {
   &.has-prefix {
     .input-field {
       &__input {
         padding-left: 28px;
       }
-
     }
   }
   &.has-suffix {
@@ -25,7 +26,7 @@
   &__label {
     font-size: 16px;
     margin-bottom: 4px;
-    color: #333;
+    color: $primary-color;
   }
 
   &__wrapper {
@@ -52,26 +53,26 @@
     width: 100%;
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #ddd;
+    border: 1px solid $secondary-accent-color;
     border-radius: 4px;
     text-overflow: ellipsis;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
     &:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+      border-color: $accent-color;
+      box-shadow: 0 0 0 $transparent-accent;
       outline: none;
     }
 
     &.error {
-      border-color: #dc3545;
-      box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+      border-color: $error-color;
+      box-shadow: 0 0 0 2px $transparent-error;
     }
   }
 
   &__error {
     font-size: 12px;
-    color: #dc3545;
+    color: $error-color;
     margin-top: 4px;
   }
 }
